@@ -10,6 +10,7 @@ let promotionPrice = 0;
 module.exports = function main(barCode) {
     generateWordList(barCode);
     addAllItemToExpect();
+    addPromotions();
     console.log(expectText);
 };
 
@@ -39,6 +40,18 @@ function addAllItemToExpect() {
             word.unit + "，单价：" +
             word.price.toFixed(2) + "(元)，小计：" +
             word.totalPrince.toFixed(2) + "(元)\n";
+    });
+    expectText += "----------------------\n";
+}
+
+function addPromotions() {
+    expectText += "挥泪赠送商品：\n";
+    wordList.map(word => {
+        if (promotions[0].barcodes.includes(word.barcode) && word.count >= 2) {
+            let promotionCount = 1;
+            expectText += "名称：" + word.name + "，数量：" + promotionCount + word.unit + "\n";
+            promotionPrice += word.price * promotionCount;
+        }
     });
     expectText += "----------------------\n";
 }
