@@ -11,6 +11,7 @@ module.exports = function main(barCode) {
     generateWordList(barCode);
     addAllItemToExpect();
     addPromotions();
+    addTotalPrince();
     console.log(expectText);
 };
 
@@ -54,4 +55,10 @@ function addPromotions() {
         }
     });
     expectText += "----------------------\n";
+}
+
+function addTotalPrince() {
+    expectText += "总计：" + wordList.reduce((sum, w) => sum += w.totalPrince, 0).toFixed(2) + "(元)\n";
+    expectText += "节省：" + promotionPrice.toFixed(2) + "(元)\n";
+    expectText += "**********************";
 }
